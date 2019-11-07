@@ -1,0 +1,31 @@
+{{ define "content" }}
+  <div class="page-header">
+    <h1 style="color:DarkGreen">{{ .Title }}</h1>
+    <center><img src="../images/contact.png" alt="contact" height="100" width="100"></center>
+  </div>
+  <form action="/enquires/" id="feedback" method="post" onsubmit="return checkForm(this);">
+
+    <div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" name="email" required placeholder="Email"id="email" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="telephone">Telephone</label>
+			<input type="telephone" name="telephone" required placeholder="Telephone" id="telephone" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="location">Location</label>
+			<input type="location" name="location" required placeholder="Location of the company/project" id="location" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="subjectheading">Nature of Enquiry</label>
+			<input type="subjectheading" name="subjectheading" required placeholder="Nature of enquiry" id="subjectheading" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="enquiry">Enquiry Details</label>
+			<input type="enquiry" name="enquiry" required placeholder="Please include any details so that we can best respond to your enquiry"  id="enquiry" class="form-control">
+		</div>
+    <input type="submit" value="Send" class="btn btn-primary">
+</form>
+  <p></p>
+{{ end }}

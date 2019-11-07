@@ -1,0 +1,123 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Soria Consulting, providing bespoke solutions for your business financial projects - London</title>
+
+    <meta name="description" content="Finance consultancy with international experience at Board level - Business analysis, Database design and implementation, Report development, Project delivery. Working in English, Spanish & Portuguese.">
+    <meta name="Keywords" content="finance consulting, finance analysis, finance reports, finance strategy,database design, accounting process automation, london financial consultancy">
+<style>
+
+h1 {
+	text-align:center;
+}
+h2 {
+	text-align: center;
+}
+h3 {
+	text-align: center;
+}
+h4{
+	text-align: center;
+}
+
+h5{
+	text-align: center;
+}
+
+h6{
+	text-align: center;
+}
+p.a{
+	text-align: center;
+}
+.footer {
+   position: relative;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: black;
+   color: white;
+   text-align: center;
+}
+
+.intro {
+background-color: white;
+	height: 100%;
+		background-position: center;
+			background-repeat: no-repeat;
+				background-size: cover;
+					border: solid 2px white;
+}
+
+.wwd {
+background-color: #A9F5A9;
+	height: 100%;
+		background-position: center;
+			background-repeat: no-repeat;
+				background-size: cover;
+					border: solid 2px #A9F5A9;
+}
+
+.hwdi {
+background-color: white;
+	height: 100%;
+		background-position: center;
+			background-repeat: no-repeat;
+				background-size: cover;
+					border: solid 2px white;
+}
+.tm {
+background-image: url(../images/team.jpg);
+	height: 100%;
+		background-position: center;
+			background-repeat: no-repeat;
+				background-size: cover;
+}
+.well img{
+display: inline-block;
+}
+
+</style>
+    <title>Soria Consulting</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css">
+    <script type="text/javascript" src="/static/js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/pwdval.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+	  <a class="navbar-brand" href="/">Soria Consulting</a>
+        </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+		      <li><a href="/about/">About</a></li>
+		      <li><a href="/team/">Team</a></li>
+		      <li><a href="/enquires/">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      {{ template "content" . }}
+    </div>
+      </body>
+<div class="footer">
+	<p> <span class="glyphicon glyphicon-earphone"></span> +447775 818937</p>
+	<p><span class="glyphicon glyphicon-envelope"></span> rosa.martinez@soriaconsulting.co.uk</p>
+	</a>
+	<p><center><a href="https://twitter.com/soriaconsulting"><img src="../images/twitter.jpeg" alt="twitter-logo" height="20" width="20"></a></center>follow us on twitter</p>
+	<img src="../images/BTCLTC.png" alt="BTC&LTCacceptedhere" height="75" width="110">
+</div>
+</html>
+{{end}}
