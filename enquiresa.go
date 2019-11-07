@@ -14,7 +14,7 @@ import(
 	"compress/gzip"
 
 )
-
+//to test using smtp to send emails from an app
 var enquiresconfirmTemplate = template.Must(template.ParseGlob("templates/enquiresconfirm.html"))
 
 var user string
