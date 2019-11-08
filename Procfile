@@ -1,1 +1,1 @@
-web: bin/mailsmtp
+web: bin/GolangWebApp

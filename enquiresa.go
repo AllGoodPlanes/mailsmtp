@@ -1,19 +1,18 @@
 package main
 
-import(
-
-	"net/http"
-	"net/smtp"
-	"fmt"
+import (
+	"compress/gzip"
 	"errors"
-	"log"
+	"fmt"
 	"html/template"
 	"io"
+	"log"
+	"net/http"
+	"net/smtp"
 	"os"
 	"strings"
-	"compress/gzip"
-
 )
+
 //to test using smtp to send emails from an app
 var enquiresconfirmTemplate = template.Must(template.ParseGlob("templates/enquiresconfirm.html"))
 
@@ -29,8 +28,8 @@ func main() {
 
 	fmt.Println("Listening...")
 	mux.HandleFunc("/", makeGzipHandler(Enquires))
-	fs:= http.FileServer(http.Dir("static"))
-	mux.Handle("/static/",http.StripPrefix("/static/", fs))
+	fs := http.FileServer(http.Dir("static"))
+	mux.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.ListenAndServe(GetPort(), mux)
 }
 
@@ -45,24 +44,23 @@ type Context struct {
 	User   string
 }
 
-func (w gzipResponseWriter) Write(b []byte) (int, error){
+func (w gzipResponseWriter) Write(b []byte) (int, error) {
 	return w.Writer.Write(b)
 }
 
 func makeGzipHandler(fn http.HandlerFunc) http.HandlerFunc {
-	return func(w http.ResponseWriter, r*http.Request) {
-		if !strings.Contains(r.Header.Get("Accept-Encoding"),"gzip") {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if !strings.Contains(r.Header.Get("Accept-Encoding"), "gzip") {
 			fn(w, r)
 			return
 		}
 		w.Header().Set("Content-Encoding", "gzip")
 		gz := gzip.NewWriter(w)
 		defer gz.Close()
-		gzr:=gzipResponseWriter{Writer:gz, ResponseWriter: w}
+		gzr := gzipResponseWriter{Writer: gz, ResponseWriter: w}
 		fn(gzr, r)
 	}
 }
-
 
 func Home(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
@@ -77,7 +75,7 @@ func Home(w http.ResponseWriter, req *http.Request) {
 }
 
 type loginAuth struct {
-  username, password string
+	username, password string
 }
 
 func LoginAuth(username, password string) smtp.Auth {
@@ -102,43 +100,43 @@ func (a *loginAuth) Next(fromServer []byte, more bool) ([]byte, error) {
 	return nil, nil
 }
 
-func Enquires(w http.ResponseWriter, req *http.Request){
+func Enquires(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "Contact Us"}
 	fmt.Println("method:", req.Method)
-	if req.Method == "GET"{
-	render (w, "enquires", context)
-} else {
-	req.ParseForm()
+	if req.Method == "GET" {
+		render(w, "enquires", context)
+	} else {
+		req.ParseForm()
 
-	email := req.FormValue("email")
-	telephone := req.FormValue("telephone")
-	location := req.FormValue("location")
-	subjectheading := req.FormValue("subjectheading")
-	enquiry := req.FormValue("enquiry")
+		email := req.FormValue("email")
+		telephone := req.FormValue("telephone")
+		location := req.FormValue("location")
+		subjectheading := req.FormValue("subjectheading")
+		enquiry := req.FormValue("enquiry")
 
-fmt.Println(email+telephone+location+subjectheading+enquiry)
+		fmt.Println(email + telephone + location + subjectheading + enquiry)
 
-	message := []byte("To:" + "trymriverman@gmail.com" + "\r\n" +
-		"Subject:" + subjectheading + "\r\n" +
-		"\r\n" +
-		"email:" + email + "\r\n" +
-		"\r\n" +
-		"Telephone:" + telephone + "\r\n" +
-		"\r\n" +
-		"Location:" + location + "\r\n" +
-		"\r\n" +
-		"Enquiry details:" + enquiry )
-to := []string{"trymriverman@gmail.com"}
- auth := LoginAuth("admin@gocloudcoding.com","hotdAsp0t")
- err := smtp.SendMail("smtp.office365.com:587", auth, "admin@gocloudcoding.com", to, message)
+		message := []byte("To:" + "trymriverman@gmail.com" + "\r\n" +
+			"Subject:" + subjectheading + "\r\n" +
+			"\r\n" +
+			"email:" + email + "\r\n" +
+			"\r\n" +
+			"Telephone:" + telephone + "\r\n" +
+			"\r\n" +
+			"Location:" + location + "\r\n" +
+			"\r\n" +
+			"Enquiry details:" + enquiry)
+		to := []string{"trymriverman@gmail.com"}
+		auth := LoginAuth("admin@gocloudcoding.com", "hotdAsp0t")
+		err := smtp.SendMail("smtp.office365.com:587", auth, "admin@gocloudcoding.com", to, message)
 
- if err != nil{
-	 log.Fatal(err)
- }
+		if err != nil {
+			log.Fatal(err)
+		}
 
-enquiresconfirmTemplate.ExecuteTemplate(w, "enquiresconfirm.html", nil)
-}
+		enquiresconfirmTemplate.ExecuteTemplate(w, "enquiresconfirm.html", nil)
+	}
 }
 
 func render(w http.ResponseWriter, tmpl string, context Context) {
@@ -150,7 +148,7 @@ func render(w http.ResponseWriter, tmpl string, context Context) {
 	if err != nil {
 		log.Print("template parsing error: ", err)
 	}
-	err= t.ExecuteTemplate(w, "base", context)
+	err = t.ExecuteTemplate(w, "base", context)
 	if err != nil {
 		log.Print("template executing error: ", err)
 	}
@@ -166,5 +164,3 @@ func GetPort() string {
 
 	return ":" + port
 }
-
-
